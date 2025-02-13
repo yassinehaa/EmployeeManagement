@@ -12,12 +12,14 @@ public class Persondao {
     public Persondao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/persondb", "root", "");
+            this.connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/employeemanagement", "root", "");
 
+            if (this.connection == null) {
+                throw new SQLException("Failed to establish database connection!");
+            }
 
             Statement statement = connection.createStatement();
-
             String createTableSQL = "CREATE TABLE IF NOT EXISTS person (" +
                     "id INT AUTO_INCREMENT PRIMARY KEY, " +
                     "name VARCHAR(100) NOT NULL, " +
@@ -25,21 +27,20 @@ public class Persondao {
                     "address VARCHAR(255), " +
                     "tel VARCHAR(20)" +
                     ");";
-
             statement.executeUpdate(createTableSQL);
 
             System.out.println("Table 'person' created successfully (if it did not exist already).");
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-
     public void createPerson(Person person) {
+        if (connection == null) {
+            System.err.println("Database connection is not initialized!");
+            return;
+        }
+
         String query = "INSERT INTO person (name, age, address, tel) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, person.getName());
@@ -52,9 +53,13 @@ public class Persondao {
         }
     }
 
-
     public List<Person> getAllPersons() {
         List<Person> personList = new ArrayList<>();
+        if (connection == null) {
+            System.err.println("Database connection is not initialized!");
+            return personList;
+        }
+
         String query = "SELECT * FROM person";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -74,6 +79,11 @@ public class Persondao {
     }
 
     public Person getPersonById(int id) {
+        if (connection == null) {
+            System.err.println("Database connection is not initialized!");
+            return null;
+        }
+
         Person person = null;
         String query = "SELECT * FROM person WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -94,8 +104,12 @@ public class Persondao {
         return person;
     }
 
-
     public void updatePerson(Person person) {
+        if (connection == null) {
+            System.err.println("Database connection is not initialized!");
+            return;
+        }
+
         String query = "UPDATE person SET name = ?, age = ?, address = ?, tel = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, person.getName());
@@ -109,8 +123,12 @@ public class Persondao {
         }
     }
 
-
     public void deletePerson(int id) {
+        if (connection == null) {
+            System.err.println("Database connection is not initialized!");
+            return;
+        }
+
         String query = "DELETE FROM person WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);

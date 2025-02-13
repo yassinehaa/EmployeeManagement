@@ -9,7 +9,7 @@
 <body>
 <div class="container mt-5">
     <h2 class="text-center mb-4">personne formulaire</h2>
-    <form action="createPerson" method="post">
+    <form action="create" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" required />

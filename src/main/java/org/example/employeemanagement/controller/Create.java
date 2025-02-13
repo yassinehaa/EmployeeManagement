@@ -28,5 +28,6 @@ public class Create extends HttpServlet {
 
         Person person = new Person(name, age, address, tel);
         persondao.createPerson(person);
+        response.sendRedirect(request.getContextPath()+"/read");
     }
 }

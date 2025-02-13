@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Person List</title>
+    <title>Liste des Personnes</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -25,7 +25,7 @@
         </thead>
         <tbody>
         <%
-            List<Person> personList = (List<Person>) request.getAttribute("personList");
+            List<Person> personList = (List<Person>) request.getAttribute("ListP");
 
             for (Person person : personList) {
         %>
