@@ -1,19 +1,20 @@
 package org.example.employeemanagement.dao;
 
+
 import org.example.employeemanagement.model.Person;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Persondao {
-
     private Connection connection;
 
     public Persondao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/employeemanagement", "root", "7346005");
+                    "jdbc:mysql://localhost:3306/employeemanagement", "root", "");
 
             if (this.connection == null) {
                 throw new SQLException("Failed to establish database connection!");
@@ -48,7 +49,7 @@ public class Persondao {
             return;
         }
 
-        String query = "INSERT INTO person (nom,prenom,email,poste,salaire) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO person (nom, prenom, email, poste, salaire) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, person.getNom());
             stmt.setString(2, person.getPrenom());
@@ -74,18 +75,13 @@ public class Persondao {
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 Person person = new Person(
-                    rs.getString("nom"),
-                    rs.getString("prenom"),
-                    rs.getString("email"),
-                    rs.getString("poste"),
-                    rs.getInt("salaire")
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("poste"),
+                        rs.getInt("salaire")
                 );
                 person.setId(rs.getInt("id"));
-                person.setNom(rs.getString("nom"));
-                person.setPrenom(rs.getString("prenom"));
-                person.setEmail(rs.getString("email"));
-                person.setPoste(rs.getString("poste"));
-                person.setSalaire(rs.getInt("salaire"));
                 personList.add(person);
             }
         } catch (SQLException e) {
@@ -108,18 +104,13 @@ public class Persondao {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     person = new Person(
-                        rs.getString("nom"),
-                        rs.getString("prenom"),
-                        rs.getString("email"),
-                        rs.getString("poste"),
-                        rs.getInt("salaire")
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("email"),
+                            rs.getString("poste"),
+                            rs.getInt("salaire")
                     );
                     person.setId(rs.getInt("id"));
-                    person.setNom(rs.getString("nom"));
-                    person.setPrenom(rs.getString("prenom"));
-                    person.setEmail(rs.getString("email"));
-                    person.setPoste(rs.getString("poste"));
-                    person.setSalaire(rs.getInt("salaire"));
                 }
             }
         } catch (SQLException e) {
@@ -135,14 +126,14 @@ public class Persondao {
             return;
         }
 
-        String query = "UPDATE person SET name = ?, age = ?, address = ?, tel = ? WHERE id = ?";
+        String query = "UPDATE person SET nom = ?, prenom = ?, email = ?, poste = ?, salaire = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, person.getNom());
             stmt.setString(2, person.getPrenom());
             stmt.setString(3, person.getEmail());
             stmt.setString(4, person.getPoste());
-            stmt.setInt(5, person.getId());
-            stmt.setInt(6, person.getSalaire());
+            stmt.setInt(5, person.getSalaire());
+            stmt.setInt(6, person.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error updating person: " + e.getMessage());

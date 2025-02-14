@@ -1,22 +1,28 @@
 package org.example.employeemanagement.controller;
 
-import java.io.*;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.example.employeemanagement.dao.Persondao;
-import org.example.employeemanagement.model.Person;
-import java.util.List;
+
+import java.io.IOException;
+
 @WebServlet("/delete")
-public class Delete extends HttpServlet{
+public class Delete extends HttpServlet {
     private Persondao persondao;
-    public void init() {persondao = new Persondao();}
+
+    @Override
+    public void init() {
+        persondao = new Persondao();
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        Persondao persondao = new Persondao();
         persondao.deletePerson(id);
-        response.sendRedirect(request.getContextPath()+"/read");
+        response.sendRedirect(request.getContextPath() + "/read");
     }
-
 }

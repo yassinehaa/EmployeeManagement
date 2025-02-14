@@ -1,50 +1,37 @@
-<%@ page import="org.example.employeemanagement.model.Person" %>
-<!DOCTYPE html>
-<html lang="fr">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mise a jour Formulaire</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Update Employee</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Mise a jour d'une personne</h2>
-
+    <h1>Update Employee</h1>
     <form action="update" method="post">
-        <input type="hidden" name="id" value="${Person.id}" />
-
+        <input type="hidden" name="id" value="${person.id}">
         <div class="form-group">
-
-            <input type="text" class="form-control" name="name" value="${Person.name}" required />
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" name="nom" value="${person.nom}">
         </div>
-
         <div class="form-group">
-
-        <input type="text" class="form-control" name="prenom" value="${Person.prenom}" required />
-    </div>
-
-        <div class="form-group">
-
-            <input type="text" class="form-control" name="email" value="${Person.email}" required />
+            <label for="prenom">Prenom:</label>
+            <input type="text" class="form-control" name="prenom" value="${person.prenom}">
         </div>
-
         <div class="form-group">
-
-            <input type="text" class="form-control" name="poste" value="${Person.poste}" required />
+            <label for="email">Email:</label>
+            <input type="text" class="form-control" name="email" value="${person.email}">
         </div>
-
         <div class="form-group">
-
-            <input type="number" class="form-control" name="tel" value="${Person.salaire}" required />
+            <label for="poste">Poste:</label>
+            <input type="text" class="form-control" name="poste" value="${person.poste}">
         </div>
-
-        <button type="submit" class="btn btn-primary btn-block">mettre a jour</button>
+        <div class="form-group">
+            <label for="salaire">Salaire:</label>
+            <input type="text" class="form-control" name="salaire" value="${person.salaire}">
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
-
-    <br>
-    <a href="ListP.jsp" class="btn btn-secondary">Back to Person List</a>
 </div>
-
 </body>
 </html>

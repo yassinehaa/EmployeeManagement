@@ -1,5 +1,6 @@
 package org.example.employeemanagement.controller;
 
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import java.io.IOException;
 public class Update extends HttpServlet {
     private Persondao persondao;
 
+    @Override
     public void init() {
         persondao = new Persondao();
     }
@@ -29,16 +31,16 @@ public class Update extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String nom = request.getParameter("nom");  // Changed to 'nom'
+        String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String email = request.getParameter("email");
         String poste = request.getParameter("poste");
-        int salaire = Integer.parseInt(request.getParameter("salaire"));  // Changed to 'salaire'
+        int salaire = Integer.parseInt(request.getParameter("salaire"));
 
         Person person = new Person(nom, prenom, email, poste, salaire);
         person.setId(id);
         persondao.updatePerson(person);
 
-        response.sendRedirect("Read");
+        response.sendRedirect("read");
     }
 }
