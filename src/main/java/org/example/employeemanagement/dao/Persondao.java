@@ -13,24 +13,31 @@ public class Persondao {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/employeemanagement", "root", "");
+                    "jdbc:mysql://localhost:3306/employeemanagement", "root", "7346005");
 
             if (this.connection == null) {
                 throw new SQLException("Failed to establish database connection!");
             }
 
-            Statement statement = connection.createStatement();
-            String createTableSQL = "CREATE TABLE IF NOT EXISTS person (" +
-                    "id INT AUTO_INCREMENT PRIMARY KEY, " +
-                    "name VARCHAR(100) NOT NULL, " +
-                    "age INT NOT NULL, " +
-                    "address VARCHAR(255), " +
-                    "tel VARCHAR(20)" +
-                    ");";
-            statement.executeUpdate(createTableSQL);
+            try (Statement statement = connection.createStatement()) {
+                String createTableSQL = "CREATE TABLE IF NOT EXISTS person (" +
+                        "id INT AUTO_INCREMENT PRIMARY KEY, " +
+                        "nom VARCHAR(100) NOT NULL, " +
+                        "prenom VARCHAR(100) NOT NULL, " +
+                        "email VARCHAR(255) NOT NULL, " +
+                        "poste VARCHAR(100) NOT NULL, " +
+                        "salaire INT NOT NULL" +
+                        ");";
 
-            System.out.println("Table 'person' created successfully (if it did not exist already).");
-        } catch (Exception e) {
+                statement.executeUpdate(createTableSQL);
+                System.out.println("Table 'person' created successfully");
+            }
+
+        } catch (ClassNotFoundException e) {
+            System.err.println("MySQL JDBC Driver not found!");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("Database connection error: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -41,14 +48,16 @@ public class Persondao {
             return;
         }
 
-        String query = "INSERT INTO person (name, age, address, tel) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO person (nom,prenom,email,poste,salaire) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, person.getName());
-            stmt.setInt(2, person.getAge());
-            stmt.setString(3, person.getAddress());
-            stmt.setString(4, person.getTel());
+            stmt.setString(1, person.getNom());
+            stmt.setString(2, person.getPrenom());
+            stmt.setString(3, person.getEmail());
+            stmt.setString(4, person.getPoste());
+            stmt.setInt(5, person.getSalaire());
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.err.println("Error inserting person: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -64,15 +73,23 @@ public class Persondao {
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                Person person = new Person();
+                Person person = new Person(
+                    rs.getString("nom"),
+                    rs.getString("prenom"),
+                    rs.getString("email"),
+                    rs.getString("poste"),
+                    rs.getInt("salaire")
+                );
                 person.setId(rs.getInt("id"));
-                person.setName(rs.getString("name"));
-                person.setAge(rs.getInt("age"));
-                person.setAddress(rs.getString("address"));
-                person.setTel(rs.getString("tel"));
+                person.setNom(rs.getString("nom"));
+                person.setPrenom(rs.getString("prenom"));
+                person.setEmail(rs.getString("email"));
+                person.setPoste(rs.getString("poste"));
+                person.setSalaire(rs.getInt("salaire"));
                 personList.add(person);
             }
         } catch (SQLException e) {
+            System.err.println("Error fetching persons: " + e.getMessage());
             e.printStackTrace();
         }
         return personList;
@@ -90,15 +107,23 @@ public class Persondao {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    person = new Person();
+                    person = new Person(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("poste"),
+                        rs.getInt("salaire")
+                    );
                     person.setId(rs.getInt("id"));
-                    person.setName(rs.getString("name"));
-                    person.setAge(rs.getInt("age"));
-                    person.setAddress(rs.getString("address"));
-                    person.setTel(rs.getString("tel"));
+                    person.setNom(rs.getString("nom"));
+                    person.setPrenom(rs.getString("prenom"));
+                    person.setEmail(rs.getString("email"));
+                    person.setPoste(rs.getString("poste"));
+                    person.setSalaire(rs.getInt("salaire"));
                 }
             }
         } catch (SQLException e) {
+            System.err.println("Error fetching person by ID: " + e.getMessage());
             e.printStackTrace();
         }
         return person;
@@ -112,13 +137,15 @@ public class Persondao {
 
         String query = "UPDATE person SET name = ?, age = ?, address = ?, tel = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, person.getName());
-            stmt.setInt(2, person.getAge());
-            stmt.setString(3, person.getAddress());
-            stmt.setString(4, person.getTel());
+            stmt.setString(1, person.getNom());
+            stmt.setString(2, person.getPrenom());
+            stmt.setString(3, person.getEmail());
+            stmt.setString(4, person.getPoste());
             stmt.setInt(5, person.getId());
+            stmt.setInt(6, person.getSalaire());
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.err.println("Error updating person: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -134,6 +161,7 @@ public class Persondao {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
+            System.err.println("Error deleting person: " + e.getMessage());
             e.printStackTrace();
         }
     }

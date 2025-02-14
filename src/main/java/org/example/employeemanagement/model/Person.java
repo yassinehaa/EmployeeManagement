@@ -2,20 +2,20 @@ package org.example.employeemanagement.model;
 
 public class Person {
     private int id;
-    private String name;
-    private int age;
-    private String address;
-    private String tel;
+    private String nom;
+    private String prenom;
+    private String email;
+    private String poste;
+    private int salaire;
 
-
-    public Person() {}
-
-    public Person(String name, int age, String address, String tel) {
-        this.name = name;
-        this.age = age;
-        this.address = address;
-        this.tel = tel;
+    public Person(String nom, String prenom, String email, String poste, int salaire) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.poste = poste;
+        this.salaire = salaire;
     }
+
 
     public int getId() {
         return id;
@@ -25,36 +25,43 @@ public class Person {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNom() {
+        return nom;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public int getAge() {
-        return age;
+    public String getPrenom() {
+        return prenom;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getTel() {
-        return tel;
+    public String getPoste() {
+        return poste;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setPoste(String poste) {
+        this.poste = poste;
+    }
+
+    public int getSalaire() {
+        return salaire;
+    }
+
+    public void setSalaire(int salaire) {
+        this.salaire = salaire;
     }
 }
-

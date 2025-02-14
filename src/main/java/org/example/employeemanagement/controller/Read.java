@@ -17,7 +17,7 @@ public class Read extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         List<Person> Listp = persondao.getAllPersons();
-        request.setAttribute("Listp", Listp);
+        request.setAttribute("ListP", Listp);
         request.getRequestDispatcher("/WEB-INF/ListP.jsp").forward(request,response);
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {}

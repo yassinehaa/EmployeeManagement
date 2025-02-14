@@ -9,9 +9,9 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Update Person</h2>
+    <h2 class="text-center mb-4">Mise a jour d'une personne</h2>
 
-    <form action="UpdateP.jsp" method="post">
+    <form action="update" method="post">
         <input type="hidden" name="id" value="${Person.id}" />
 
         <div class="form-group">
@@ -21,20 +21,25 @@
 
         <div class="form-group">
 
-            <input type="number" class="form-control" name="age" value="${Person.age}" required />
+        <input type="text" class="form-control" name="prenom" value="${Person.prenom}" required />
+    </div>
+
+        <div class="form-group">
+
+            <input type="text" class="form-control" name="email" value="${Person.email}" required />
         </div>
 
         <div class="form-group">
 
-            <input type="text" class="form-control" name="address" value="${Person.address}" required />
+            <input type="text" class="form-control" name="poste" value="${Person.poste}" required />
         </div>
 
         <div class="form-group">
 
-            <input type="text" class="form-control" name="tel" value="${Person.tel}" required />
+            <input type="number" class="form-control" name="tel" value="${Person.salaire}" required />
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block">Update</button>
+        <button type="submit" class="btn btn-primary btn-block">mettre a jour</button>
     </form>
 
     <br>

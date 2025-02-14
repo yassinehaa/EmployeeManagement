@@ -10,17 +10,17 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Person List</h2>
+    <h2 class="text-center mb-4">Liste des personnes</h2>
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Age</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Actions</th>
+            <th>Prenom</th>
+            <th>Email</th>
+            <th>Poste</th>
+            <th>Salaire</th>
         </tr>
         </thead>
         <tbody>
@@ -31,10 +31,11 @@
         %>
         <tr>
             <td><%= person.getId() %></td>
-            <td><%= person.getName() %></td>
-            <td><%= person.getAge() %></td>
-            <td><%= person.getAddress() %></td>
-            <td><%= person.getTel() %></td>
+            <td><%= person.getNom() %></td>
+            <td><%= person.getPrenom() %></td>
+            <td><%= person.getEmail() %></td>
+            <td><%= person.getPoste() %></td>
+            <td><%= person.getSalaire() %></td>
             <td>
                 <a href="updatePerson?id=<%= person.getId() %>" class="btn btn-warning btn-sm">Edit</a>
                 <form action="deletePerson" method="post" style="display:inline;">
@@ -50,7 +51,7 @@
         </tbody>
     </table>
 
-    <a href="createPerson" class="btn btn-success">Create New Person</a>
+    <a href="create" class="btn btn-success">Creer une nouvelle personne</a>
 </div>
 
 

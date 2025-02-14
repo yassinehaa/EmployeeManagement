@@ -22,11 +22,12 @@ public class Create extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
-        int age = Integer.parseInt(request.getParameter("age"));
-        String address = request.getParameter("address");
-        String tel = request.getParameter("tel");
+        String prenom = request.getParameter("prenom");
+        String email = request.getParameter("email");
+        String poste = request.getParameter("poste");
+        int salaire = Integer.parseInt(request.getParameter("Salaire"));
 
-        Person person = new Person(name, age, address, tel);
+        Person person = new Person(name, prenom, email, poste, salaire);
         persondao.createPerson(person);
         response.sendRedirect(request.getContextPath()+"/read");
     }
